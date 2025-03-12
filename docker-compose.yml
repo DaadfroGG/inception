@@ -1,0 +1,16 @@
+
+services:
+  nginx:
+    build:
+      context: ./srcs/nginx
+    container_name: nginx_container
+
+  mariadb:
+    build:
+      context: ./srcs/mariadb
+    container_name: mariadb_container
+
+  wordpress:
+    build:
+      context: ./srcs/wordpress
+    container_name: wordpress_container
