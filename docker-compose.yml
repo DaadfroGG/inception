@@ -1,16 +1,56 @@
 
 services:
+
   nginx:
     build:
       context: ./srcs/nginx
     container_name: nginx_container
-
-  mariadb:
-    build:
-      context: ./srcs/mariadb
-    container_name: mariadb_container
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress_data:/var/www/html
+    depends_on:
+      - wordpress
+      - mariadb
+    networks:
+      - inception
+    restart: always
 
   wordpress:
     build:
       context: ./srcs/wordpress
     container_name: wordpress_container
+    ports:
+      - "3306" #not open to the public
+      - "9000" #not open to the public 
+    volumes:
+      - wordpress_data:/var/www/html
+    depends_on:
+      - mariadb
+    networks:
+      - inception
+    restart: always
+
+  mariadb:
+    build:
+      context: ./srcs/mariadb
+    container_name: mariadb_container
+    ports:
+      - "3306" #not open to the public
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - inception
+    env_file:
+      - .env
+    restart: always
+
+
+volumes:
+
+  mariadb_data:
+  wordpress_data:
+
+networks:
+
+  inception:  
