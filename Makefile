@@ -5,7 +5,7 @@ all:
 	# -f allows specifying a custom docker-compose file
 
 build:
-	docker compose build --no-cache
+	docker compose build --no-cache  -t
 
 up:
 	docker compose up

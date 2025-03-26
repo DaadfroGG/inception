@@ -12,20 +12,19 @@ RUN apt update && apt install -y \
     curl \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
-
 RUN mkdir -p /var/www/html && \
     wget https://wordpress.org/latest.tar.gz && \
     tar -xvf latest.tar.gz && \
     mv wordpress/* /var/www/html/ && \
     rm -rf wordpress latest.tar.gz
+# 
 RUN chown -R www-data:www-data /var/www/html && \
     chmod -R 755 /var/www/html
-    
+# 
+COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 COPY ./conf/wp-config.php /var/www/html/wp-config.php
 RUN mkdir -p /run/php
 
-
 EXPOSE 9000
 
-
-CMD ["/usr/sbin/php-fpm7.4", "--nodaemonize"]
+CMD ["php-fpm7.4", "-F"]
