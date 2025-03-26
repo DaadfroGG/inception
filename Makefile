@@ -5,21 +5,20 @@ all:
 	# -f allows specifying a custom docker-compose file
 
 build:
-	docker compose build
+	docker compose build --no-cache
 
 up:
 	docker compose up
 
 down:
-	docker compose down
+	docker compose down -v
 
 restart: down up
 	echo "Containers restarted successfully."
 
 clean:
-	docker rm -f $$(docker ps -aq)
-	docker volume prune -f  # Removes unused volumes
-
+	docker compose down -v
+	docker system prune -f
 logs:
 	docker compose logs 
 
