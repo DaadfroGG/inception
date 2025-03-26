@@ -45,12 +45,22 @@ services:
       - .env
     restart: always
 
-
 volumes:
-
   mariadb_data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/dkermia/data/db'
+
   wordpress_data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/dkermia/data/wordpress'
+
 
 networks:
 
-  inception:  
+  inception:

@@ -1,5 +1,5 @@
 all:
-	docker compose up -d --build
+	docker compose up --build
 	# --build rebuilds the Docker images
 	# -d runs in detached (background) mode
 	# -f allows specifying a custom docker-compose file
@@ -8,7 +8,7 @@ build:
 	docker compose build
 
 up:
-	docker compose up -d
+	docker compose up
 
 down:
 	docker compose down
